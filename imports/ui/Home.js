@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
-import createBrowserHistory from 'history/createBrowserHistory';
-
-import Home from './Home';
-
+ 
 import { Products } from '../api/products.js';
+ 
 import Product from './Product.js';
-// route components
-
-const browserHistory = createBrowserHistory();
+ 
  
 // App component - represents the whole app
-export default class App extends Component {
+class HomePage extends Component {
     renderProducts() {
         console.log(this.props);
         return this.props.products.map((product) => (
@@ -23,13 +18,21 @@ export default class App extends Component {
  
   render() {
     return (
-      <div>
-        <Router history={browserHistory}>
-        <Switch>
-            <Route exact path="/" component={Home}/>
-        </Switch>
-        </Router>
+      <div className="container">
+        <header>
+          <h1>Todo List</h1>
+        </header>
+ 
+        <ul>
+          {this.renderProducts()}
+        </ul>
       </div>
     );
   }
 } 
+
+export default withTracker(() => {
+    return {
+      products: Products.find({}).fetch(),
+    };
+  })(HomePage);
