@@ -52,7 +52,8 @@ ProductPage = (props) => {
                     <input type="text" className="form-control" onChange={onChangeInput} value={counter} type="text" aria-describedby="basic-addon1" pattern="[0-9]*"/>
                 </div>
                 <button type="button" className="btn btn-primary" onClick={removeProduct}>-</button>
-                <button type="button" className="btn btn-primary"> Add to cart</button>
+                <button type="button" className="btn btn-primary" 
+                    onClick={()=>{props.addItem(product.title, counter)}}> Add to cart</button>
             </div>
 
         </div>
