@@ -35,7 +35,7 @@ const  App = (props) => {
           <Route exact path="/" component={Home}/>
           <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
           <Route exact path="/author" component={Autor}/>
-          <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} setCartItems={props.setCartItems}/>} />
+          <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart}/>} />
       </Switch>
       </Router>
     </div>
@@ -46,14 +46,17 @@ const AppManager = () => {
   const [cartItems, setCartItems] = useState(
     [
       {
+          id: "d3fS2",
           productName: "Product 1",
           count: 3
       },
       {
+          id: "d45fd",
           productName: "Product 2",
           count: 1
       },
       {
+          id: "dg5jf7d",
           productName: "Product 1",
           count: 2
       },
@@ -63,10 +66,20 @@ const AppManager = () => {
     setCartItems([...cartItems, {name: productName, count: count}]);
   } 
 
+  const removeItemFromCart = (id) => {
+    const filteredItems = cartItems.filter((item) => {
+      return item.id != id;
+    });
+    console.log(id);
+
+    setCartItems(filteredItems);
+  } 
+
   const props = {
     cartItems: cartItems,
     setCartItems: setCartItems,
-    addItemToCart: addItemToCart
+    addItemToCart: addItemToCart,
+    removeItemFromCart: removeItemFromCart
   }
 
   return <App {...props}/>;

@@ -18,7 +18,7 @@ const CartItem = (props) => {
                         <input type="text" class="form-control input-sm" value={props.count}/>
                     </div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-link btn-xs">
+                        <button type="button" class="btn btn-link btn-xs" onClick={()=>{props.removeItemFromCart(props.id)}}>
                             <span class="glyphicon glyphicon-trash"> </span>
                         </button>
                     </div>

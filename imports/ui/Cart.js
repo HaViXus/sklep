@@ -6,13 +6,16 @@ const Cart = (props) => {
 
     const renderItems = () => {
         console.log(props);
-        
+
         return props.cartItems.map((item) =>{
             const product = props.products.find((itemFromDB) => {
                 return itemFromDB.title === item.productName;
             });
-            
-            return <CartItem productName={item.productName} count={item.count} price={product.price}/>;
+            return <CartItem productName={item.productName} 
+                                count={item.count} 
+                                price={product.price}
+                                id = {item.id}
+                                removeItemFromCart={props.removeItemFromCart} />;
         });
     }
 
