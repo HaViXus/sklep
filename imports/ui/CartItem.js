@@ -8,14 +8,14 @@ const CartItem = (props) => {
                 <div class="col-xs-2"><img class="img-responsive" src="http://placehold.it/100x70"/>
                 </div>
                 <div class="col-xs-4">
-                    <h4 class="product-name"><strong>Product name</strong></h4><h4><small>Product description</small></h4>
+                    <h4 class="product-name"><strong>{props.productName}</strong></h4>
                 </div>
                 <div class="col-xs-6">
                     <div class="col-xs-6 text-right">
-                        <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>
+                        <h6><strong> {props.price.toFixed(2)}$ <span class="text-muted">x</span></strong></h6>
                     </div>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control input-sm" value="1"/>
+                        <input type="text" class="form-control input-sm" value={props.count}/>
                     </div>
                     <div class="col-xs-2">
                         <button type="button" class="btn btn-link btn-xs">

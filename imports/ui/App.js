@@ -43,7 +43,22 @@ const  App = (props) => {
 }
 
 const AppManager = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(
+    [
+      {
+          productName: "Product 1",
+          count: 3
+      },
+      {
+          productName: "Product 2",
+          count: 1
+      },
+      {
+          productName: "Product 1",
+          count: 2
+      },
+    ]
+  );
   const addItemToCart = (productName, count) => {
     setCartItems([...cartItems, {name: productName, count: count}]);
   } 
