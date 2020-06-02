@@ -2,54 +2,37 @@ import React, {  useState } from 'react';
 
 const RegisterPage = () => {
     return(
-        <form class="form-horizontal" action="" method="POST">
-            <fieldset>
-                <div id="legend">
-                <legend class="">Register</legend>
+        <div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>Join to us and buy best products in all universe!</p>
                 </div>
-                <div class="control-group">
-           
-                <label class="control-label" for="username">Username</label>
-                <div class="controls">
-                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge"/>
-                    <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name *" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Phone Number *" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Password *" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Confirm Password *" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success">Submit</button>
                 </div>
-                </div>
+            </div>
+        </div>
             
-                <div class="control-group">
-               
-                <label class="control-label" for="email">E-mail</label>
-                <div class="controls">
-                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge"/>
-                    <p class="help-block">Please provide your E-mail</p>
-                </div>
-                </div>
-            
-                <div class="control-group">
-              
-                <label class="control-label" for="password">Password</label>
-                <div class="controls">
-                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge"/>
-                    <p class="help-block">Password should be at least 4 characters</p>
-                </div>
-                </div>
-            
-                <div class="control-group">
-           
-                <label class="control-label" for="password_confirm">Password (Confirm)</label>
-                <div class="controls">
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge"/>
-                    <p class="help-block">Please confirm password</p>
-                </div>
-                </div>
-            
-                <div class="control-group">
-         
-                <div class="controls">
-                    <button class="btn btn-success">Register</button>
-                </div>
-                </div>
-            </fieldset>
-            </form>
     );
 }
+
+export default RegisterPage;

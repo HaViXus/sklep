@@ -9,6 +9,7 @@ import Product from './Product.js';
 import ProductPage from './ProductPage';
 import Autor from './Autor';
 import Cart from "./Cart";
+import RegisterPage from './RegisterPage';
 // route components
 
 const browserHistory = createBrowserHistory();
@@ -28,6 +29,10 @@ const  App = (props) => {
             <li><a href="/author">Autor</a></li>
             <li><a href="/cart">Cart ({props.cartItems.length})</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/register">Sign in</a></li>
+            <li><a href="/login"><b>Login</b></a></li>
+          </ul>
         </div>
       </nav>
       <Router history={browserHistory}>
@@ -37,6 +42,7 @@ const  App = (props) => {
           <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
           <Route exact path="/author" component={Autor}/>
           <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart}/>} />
+          <Route exact path="/register" component={RegisterPage}/>
       </Switch>
       </Router>
     </div>
