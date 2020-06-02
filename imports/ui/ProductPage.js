@@ -26,38 +26,47 @@ ProductPage = (props) => {
     }
 
     console.log(props);
+
     return(
-        <div className="product-page">
+        <div className="container">
+        	<div className="row">
+                <div className="col-xs-4 item-photo">
+                    <img className="img-responsive" src={product.imageSrc}/>
+                </div>
+                <div className="col-xs-5" >
+                    <h2>{product.title}</h2>    
+                    <h4 className="title-price"><small>PRICE</small></h4>
+                    <h3> {product.price.toFixed(2)}$</h3>
+        
+                    <div className="section">
+                        <h4 className="title-attr"><small>QUANTITY</small></h4>                    
+                        <div>
+                            <button className="btn-minus" onClick={removeProduct}><span className="glyphicon glyphicon-minus" onClick={removeProduct}></span></button>
+                            <input onChange={onChangeInput} value={counter} type="text" pattern="[0-9]*"/>
+                            <button className="btn-plus" onClick={addProduct}><span className="glyphicon glyphicon-plus"  ></span></button>
+                            (Max: {product.count})
+                        </div>
+                    </div>     
+                    <hr/>
+                    <button class="btn btn-success" onClick={()=>{props.addItem(product.title, counter)}}>
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
+                        Agregar al carro
+                    </button>
+                                                                   
+                </div>      
 
-            <div className="product_data_container">
-                <div className="product_title">
-                    <a href={`/product/` + product.title }> {product.title}</a>
-                </div>
-                <div className="product_short">
-                    {product.short}
-                </div>
-                <div className="product_price">
-                    {product.price.toFixed(2)}$
-                </div>
-                <div className="product_counter">
-                    Ilosc sztuk: {product.count}
-                </div >
+        
+                <div className="col-xs-9">
+                    <h3>Description</h3>
+                    <div >
+                        <p >
+                            {product.short}
+                        </p>
+                    </div>
+                </div>		
             </div>
-            <div className="product_image_container">
-                <img className="product_image" src={product.imageSrc}/>
-            </div>
-            <div className="sell-panel">
-                <button type="button" className="btn btn-primary" onClick={addProduct}>+</button>
-                <div className="input-group mb-3">
-                    <input type="text" className="form-control" onChange={onChangeInput} value={counter} type="text" aria-describedby="basic-addon1" pattern="[0-9]*"/>
-                </div>
-                <button type="button" className="btn btn-primary" onClick={removeProduct}>-</button>
-                <button type="button" className="btn btn-primary" 
-                    onClick={()=>{props.addItem(product.title, counter)}}> Add to cart</button>
-            </div>
-
         </div>
-    )
+    );
 
 }
 
@@ -76,14 +85,14 @@ export default withTracker((props) => {
                 title: "Product 2",
                 short: "To jest jakis krotki 2 opis he he he",
                 count: 16,
-                imageSrc: "/2.png",
+                imageSrc: "/2.jpg",
                 price: 15.90
             },
             {
                 title: "Product 3",
                 short: "To jest jakis krotki 3 opis he he he",
                 count: 654,
-                imageSrc: "/3.png",
+                imageSrc: "/3.jpg",
                 price: 0.35
             },
         ]

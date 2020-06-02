@@ -15,6 +15,7 @@ const Cart = (props) => {
                                 count={item.count} 
                                 price={product.price}
                                 id = {item.id}
+                                imageSrc = {product.imageSrc}
                                 removeItemFromCart={props.removeItemFromCart} />;
         });
     }
@@ -43,9 +44,9 @@ const Cart = (props) => {
                                     <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block">
+                                    <a class="btn btn-lg btn-primary btn-sm btn-block" href="/" role="button">
                                         <span class="glyphicon glyphicon-share-alt"></span> Continue shopping
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -88,14 +89,14 @@ export default withTracker((props) => {
                 title: "Product 2",
                 short: "To jest jakis krotki 2 opis he he he",
                 count: 16,
-                imageSrc: "/2.png",
+                imageSrc: "/2.jpg",
                 price: 15.90
             },
             {
                 title: "Product 3",
                 short: "To jest jakis krotki 3 opis he he he",
                 count: 654,
-                imageSrc: "/3.png",
+                imageSrc: "/3.jpg",
                 price: 0.35
             },
         ]

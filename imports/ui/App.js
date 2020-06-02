@@ -18,13 +18,13 @@ const  App = (props) => {
 
   return (
     <div>
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">NiesamowitaNazwaSklepu</a>
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <a className="navbar-brand" href="#">NiesamowitaNazwaSklepu</a>
           </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+          <ul className="nav navbar-nav">
+            <li className="active"><a href="/">Home</a></li>
             <li><a href="/author">Autor</a></li>
             <li><a href="/cart">Cart ({props.cartItems.length})</a></li>
           </ul>
@@ -33,6 +33,7 @@ const  App = (props) => {
       <Router history={browserHistory}>
       <Switch>
           <Route exact path="/" component={Home}/>
+          <Route exact path="/home/:id" component={Home}/>
           <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
           <Route exact path="/author" component={Autor}/>
           <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart}/>} />

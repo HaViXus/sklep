@@ -10,15 +10,15 @@ export default class Product extends Component {
             <div className="product_title">
               <a href={`/product/` + this.props.product.title }> {this.props.product.title}</a>
             </div>
-            <div className="product_short">
-              {this.props.product.short}
-            </div>
-            <div className="product_price">
+            <h3 className="product_price">
               {this.props.product.price.toFixed(2)}$
-            </div>
-            <div className="product_counter">
+            </h3>
+            <h3 className="product_counter">
               Ilosc sztuk: {this.props.product.count}
-            </div >
+            </h3 >
+            <h4 className="product_short">
+              {this.props.product.short}
+            </h4>
           </div>
           <div className="product_image_container">
             <img className="product_image" src={this.props.product.imageSrc}/>
