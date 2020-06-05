@@ -20,7 +20,8 @@ Meteor.startup(() => {
       console.log(Users.find({}).fetch())
 
       res.end()
-    } else {
+    }
+    else {
       next();
     }
   });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Router, Route, Switch } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
+import {useStateWithLocalStorage} from './LocalStorage';
 
 import Home from './Home';
 
@@ -10,6 +11,10 @@ import ProductPage from './ProductPage';
 import Autor from './Autor';
 import Cart from "./Cart";
 import RegisterPage from './RegisterPage';
+import LoginPage from './LoginPage';
+import NavBar from './Navbar';
+
+import {userContext} from './userContext';
 // route components
 
 const browserHistory = createBrowserHistory();
@@ -17,35 +22,37 @@ const browserHistory = createBrowserHistory();
 // App component - represents the whole app
 const  App = (props) => {
 
+  const [user, setUser] = useStateWithLocalStorage("user");
+  const [cart, setCart] = useStateWithLocalStorage("cart");
+
+
+  const contextValue = {
+    user: user,
+    setUser: setUser,
+    cart: cart,
+    setCart: setCart
+  }
+
   return (
-    <div>
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">NiesamowitaNazwaSklepu</a>
-          </div>
-          <ul className="nav navbar-nav">
-            <li className="active"><a href="/">Home</a></li>
-            <li><a href="/author">Autor</a></li>
-            <li><a href="/cart">Cart ({props.cartItems.length})</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/register">Sign in</a></li>
-            <li><a href="/login"><b>Login</b></a></li>
-          </ul>
-        </div>
-      </nav>
+
+    <userContext.Provider value={contextValue}>
+    
+      <NavBar cartItems={props.cartItems} user={user} setUser={setUser}/>
       <Router history={browserHistory}>
-      <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/home/:id" component={Home}/>
-          <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
-          <Route exact path="/author" component={Autor}/>
-          <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart}/>} />
-          <Route exact path="/register" component={RegisterPage}/>
-      </Switch>
+        <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/home/:id" component={Home}/>
+            <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
+            <Route exact path="/author" component={Autor}/>
+            <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart}/>} />
+            <Route exact path="/register" component={RegisterPage}/>
+            <Route exact path="/login" component={LoginPage}/>
+        </Switch>
       </Router>
-    </div>
+
+      
+
+    </userContext.Provider>
   );
 }
 
