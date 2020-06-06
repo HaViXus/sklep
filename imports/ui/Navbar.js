@@ -33,7 +33,6 @@ const NavBar = (props) => {
         props.setUser("");
     }
 
-    console.log(props);
     return(
         <div>
             <nav className="navbar navbar-default">

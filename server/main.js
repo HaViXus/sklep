@@ -16,11 +16,9 @@ const updateDatabase = (cart, products) => {
         
         if(product){
           const amount = product.count - item.count;
-          console.log("PROD: ", product._id._str)
           Products.update(product._id, {
             $set: { count: amount },
           });
-          console.log(Products.find({}).fetch());
         }
     });
   }
@@ -29,7 +27,6 @@ const updateDatabase = (cart, products) => {
 }
 
 const countItemsInCart = (cart) => {
-  console.log("CART:", cart)
   let itemsAmount = [];
   const countItems = async () => {
       cart.map(item=>{
@@ -42,7 +39,7 @@ const countItemsInCart = (cart) => {
       }
     });
   }
-  return countItems().then(()=> {console.log("AMOUNT", itemsAmount); return itemsAmount});
+  return countItems().then(()=> {return itemsAmount});
 
 }
 
@@ -61,7 +58,7 @@ const isProperAmount = (cart, products) => {
     });
   }
 
-  return checkItems().then(()=>{console.log("AAAA: ", tooSmall); return tooSmall});
+  return checkItems().then(()=>{return tooSmall});
 
 
 }
@@ -104,7 +101,6 @@ const validateTransaction = (cart, res, totalPrice, req) => {
                 user: req.body.user,
                 createdAt: new Date(), // current time
               });
-              console.log(Orders.find({}).fetch());
           });
           
 
@@ -119,21 +115,15 @@ Meteor.startup(() => {
   // code to run on server at startup
   WebApp.connectHandlers.use(bodyParser.json())
   WebApp.connectHandlers.use((req, res, next) => {
-    console.log(req.url);
     if (req.url === '/api/register') {
-      console.log(req.body);
       Users.insert({
         name: req.body.name,
         password: req.body.password,
         number: req.body.number,
         createdAt: new Date(), // current time
       });
-      console.log(Users.find({}).fetch())
-
-      
     }
     else if (req.url === '/api/payinfo') {
-      console.log(req.body);
       const cart = req.body.cart;
       const user = req.body.user;
       const totalPrice = req.body.totalPrice;

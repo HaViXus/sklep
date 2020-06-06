@@ -58,7 +58,6 @@ const Pagination = (props) => {
 const Order = (props) => {
     console.log(props.order)
     return(
-
         <li>    
             <h3>Order ID: {props.order._id}</h3>       
             <p><b>Price:</b> <b>{props.order.totalPrice}$</b></p>
@@ -68,7 +67,6 @@ const Order = (props) => {
             <p><b>Cart:</b> {props.order.cart}</p>
             <p><b>Date:</b> {props.order.createdAt.toString()}</p>                     
         </li>
-
     )
 }
  

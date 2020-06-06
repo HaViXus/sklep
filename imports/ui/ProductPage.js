@@ -28,7 +28,7 @@ ProductPage = (props) => {
     }
 
     const getBuyButton = (user) => {
-        console.log(user)
+
         if(user != ""){
             return(
                 <button class="btn btn-success" onClick={()=>{counter > 0 ? props.addItem(Random.id(), product.title, counter) : ()=>{} }}>
@@ -95,9 +95,7 @@ ProductPage = (props) => {
 }
 
 export default withTracker(() => {
-    const a = Products.find({}).fetch();
-    console.log(a);
     return {
-        products: a
+        products: Products.find({}).fetch()
     };
 })(ProductPage);

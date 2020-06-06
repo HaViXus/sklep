@@ -24,7 +24,6 @@ const CreatePagination = (props) => {
 }
 
 const getPreviousPagination = (selected) => {
-    console.log("PPP: ", selected)
     if(selected == 1)
         return <li key="previous" className="page-item disabled"><a className="page-link" href={`/home/` + (selected-1)} >Previous</a></li>
     else 
@@ -61,7 +60,7 @@ const HomePage = (props) => {
     const renderProducts = () => {
         const offset = props.match.params.id ? (props.match.params.id - 1 ) * maxElements : 0;
         const data = props.products.slice(offset, offset+maxElements);
-        console.log(props);
+
         return data.map((product) => (
         <Product key={product.title} product={product} />
         ));
@@ -84,42 +83,8 @@ const HomePage = (props) => {
   
 }
 
-//  const WithTracker = () => {
-//      console.log("BBB");
-//      console.log( Products.find({}).fetch() );
-    
-//     const [data, setData] = useState([]);
-//     setData(Products.find({}).fetch());
-//     return <HomePage products={data} />
-// };
-
 export default withTracker(() => {
     return {
-        // products:[
-        //     {
-        //         title: "Product 1",
-        //         short: "To jest jakis krotki opis he he he",
-        //         count: 10,
-        //         imageSrc: "/1.png",
-        //         price: 5.50
-        //     },
-        //     {
-        //         title: "Product 2",
-        //         short: "To jest jakis krotki 2 opis he he he",
-        //         count: 16,
-        //         imageSrc: "/2.jpg",
-        //         price: 15.90
-        //     },
-        //     {
-        //         title: "Product 3",
-        //         short: "To jest jakis krotki 3 opis he he he",
-        //         count: 654,
-        //         imageSrc: "/3.jpg",
-        //         price: 0.35
-        //     },
-        // ]
       products: Products.find({}).fetch(),
     };
 })(HomePage);
-
-//export default WithTracker;

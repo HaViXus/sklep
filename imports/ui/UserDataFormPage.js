@@ -6,9 +6,9 @@ const publicIp = require("react-public-ip");
 
 
 const UserDataFormPage = (props) => {
+    const [errorMessage, setErrorMessage] = useState();
 
     const getDataPromise = (price) => {
-        console.log(price);
         const getData = publicIp.v4().then(ip=>{
             const data = {
                 "order": {
@@ -38,11 +38,8 @@ const UserDataFormPage = (props) => {
         return getData;
     }
     
-
     const url = "https://ssl.dotpay.pl/test_payment/payment_api/v1/register_order/"
-
     const state = props.history.location.state;
-    console.log(state);
 
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
@@ -69,13 +66,12 @@ const UserDataFormPage = (props) => {
         else if(ZIPCode.length === 0) isValid = false;
         else if(homeNr.length === 0) isValid = false;
         else if(city.length === 0) isValid = false;
-        console.log(street.length, " ", street.length)
+
         if(!isValid){
             setIsFormValid(false);
         }
         else{
             const cartToSend = JSON.stringify(props.cartItems);
-            console.log(cartToSend);
             
             axios.post(`/api/payinfo`, {
                 user: state.user,
@@ -87,17 +83,7 @@ const UserDataFormPage = (props) => {
                 city: city
             })
             .then(res => {  
-
-                console.log("RES: ", res);
-                console.log("DATA: ", res.data);
                 if(res.data.status==="Success"){
-                    // props.history.push("/payinfo",{
-                    //     numer: res.data.numer,
-                    //     name: res.data.name,
-                    //     amount: res.data.amount,
-                    //     currency: res.data.currency,
-                    //     title: res.data.title,
-                    // });
                     getDataPromise(state.totalPrice).then(data=>{
                         axios({
                             method: 'POST',
@@ -105,16 +91,12 @@ const UserDataFormPage = (props) => {
                             headers: {"Accept":"application/json", "Content-Type": "application/json",}, 
                             data: data,
                             auth: {
-                                username: "tukedarr@gmail.com",   //<--- do wpisania
-                                password: "Cyclone1"    // <--- do wpisania
+                                username: "tukedarr@gmail.com",   
+                                password: "Cyclone1"    
                               }
-                            }).then(response => {
-                                console.log("RES: ", response)
-                                //tutaj otrzymasz link na przekierowanie, tzn. potrzebujesz przejść na link:
+                            }).then(response => {                        
                                 response.data.redirect_simplified_url
-                                //ja to zrobiłam poprzez:
-                                window.location.assign(response.data.redirect_simplified_url)
-                                //ale to dlatego że mi router kijowo działa na ten moment :D
+                                window.location.assign(response.data.redirect_simplified_url)    
                             }).catch(error => {
                           });
                           setCart(JSON.stringify([]));
@@ -123,7 +105,7 @@ const UserDataFormPage = (props) => {
                     
                 }
                 else if(res.data.status==="NoItems"){
-                    setErrorMessage(`Brak towaru: ${printBadItems(res.data.badItems)}`)
+                    setErrorMessage(`Brak towaru: ${JSON.stringify(res.data.badItems)}`)
                 }
             }).catch(error => {
                 console.log(error);
@@ -133,45 +115,51 @@ const UserDataFormPage = (props) => {
     }
 
     return(
-        <div class="container register-form">
-            <div class="form">
-                <div class="note">
-                    <p>Join to us and buy best products in all universe!</p>
-                </div>
-
-                <div class="form-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Numer domu i mieszkania" 
-                                value={homeNr} onChange={onChangeInputHomeNr}/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Ulica" 
-                                onChange={onChangeInputStreet} value={street} type="text"/>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Kod pocztowy" 
-                                value={ZIPCode} onChange={onChangeInputZipCode}/>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" className={`form-control`} placeholder="Miasto" 
-                                value={city} onChange={onChangeInputCity}/>
-                            </div>
-                        </div>
+        <>
+            <div class="container">
+                <h4 className="text-danger">{errorMessage}</h4>
+            </div>
+        
+            <div class="container register-form">
+                <div class="form">
+                    <div class="note">
+                        <p>Join to us and buy best products in all universe!</p>
                     </div>
-                    <userContext.Consumer>
-                    {(value) =>{
-                         return <button type="button" class="btn btn-success" onClick={()=>{onSubmit(value.setCart)}}>Przejdź do płatności</button>
-                     }}
-                    </userContext.Consumer>
-                    
-                    {isFormValid ? "" : "Error in form!"}
+
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Numer domu i mieszkania" 
+                                    value={homeNr} onChange={onChangeInputHomeNr}/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Ulica" 
+                                    onChange={onChangeInputStreet} value={street} type="text"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Kod pocztowy" 
+                                    value={ZIPCode} onChange={onChangeInputZipCode}/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" className={`form-control`} placeholder="Miasto" 
+                                    value={city} onChange={onChangeInputCity}/>
+                                </div>
+                            </div>
+                        </div>
+                        <userContext.Consumer>
+                        {(value) =>{
+                            return <button type="button" class="btn btn-success" onClick={()=>{onSubmit(value.setCart)}}>Przejdź do płatności</button>
+                        }}
+                        </userContext.Consumer>
+                        
+                        {isFormValid ? "" : "Error in form!"}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
             
     );
 }

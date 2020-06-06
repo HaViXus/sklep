@@ -5,8 +5,6 @@ import {useStateWithLocalStorage} from './LocalStorage';
 
 import Home from './Home';
 
-import { Products } from '../api/products.js';
-
 import ProductPage from './ProductPage';
 import Autor from './Autor';
 import Cart from "./Cart";
@@ -36,7 +34,6 @@ const  App = (props) => {
   return (
 
     <userContext.Provider value={contextValue}>
-      <button onClick={ ()=>{console.log(cart); props.setCart(JSON.stringify([]))} }></button>   
       <NavBar cartItems={props.cartItems} user={props.user} setUser={props.setUser}/>
       <Router history={browserHistory}>
         <Switch>
@@ -44,21 +41,22 @@ const  App = (props) => {
             <Route exact path="/home/:id" component={Home}/>
             <Route exact path="/orders" component={propsOrders=>{
               return(
-              <userContext.Consumer>
+                <userContext.Consumer>
                   {(value) =>{
-                       return <Orders {...propsOrders} user={value.user}/>
-                   }}
-              </userContext.Consumer>
+                      return <Orders {...propsOrders} user={value.user}/>
+                  }}
+                </userContext.Consumer>
               );
             
           }}/>
             <Route exact path="/orders/:id" component={propsOrders=>{
-              
+              return(
                 <userContext.Consumer>
-                    {(value) =>{
-                         return <Orders {...propsOrders} user={value.user}/>
-                     }}
+                  {(value) =>{
+                        return <Orders {...propsOrders} user={value.user}/>
+                  }}
                 </userContext.Consumer>
+              );
               
             }}/>
             <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
@@ -71,9 +69,6 @@ const  App = (props) => {
             
         </Switch>
       </Router>
-
-      
-
     </userContext.Provider>
   );
 }
@@ -83,11 +78,9 @@ const AppManager = () => {
   const [user, setUser] = useStateWithLocalStorage("user");
   const [cartItems, setCartItems] = useStateWithLocalStorage(`cart:${user}`);
   const addItemToCart = (id, productName, count) => {
-    console.log(cartItems)
 
     const items = cartItems ? JSON.parse( cartItems ) : [];
     const newItems = [...items, {id: id, name: productName, count: count}];
-    console.log("NEW:", newItems)
     setCartItems(JSON.stringify(newItems));
   } 
 
@@ -95,14 +88,9 @@ const AppManager = () => {
     const filteredItems = JSON.parse(cartItems).filter((item) => {
       return item.id != id;
     });
-    console.log(id);
 
     setCartItems(JSON.stringify(filteredItems));
   } 
-
-  const clearCart = () => {
-    setCartItems(JSON.stringify([]));
-  }
 
   const props = {
     cartItems: cartItems ? JSON.parse(cartItems) : [],
