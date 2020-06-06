@@ -16,6 +16,7 @@ import NavBar from './Navbar';
 import PayInfoPage from './PayInfoPage';
 import {userContext} from './userContext';
 import UserDataFormPage from './UserDataFormPage';
+import Orders from './Orders';
 // route components
 
 const browserHistory = createBrowserHistory();
@@ -41,6 +42,25 @@ const  App = (props) => {
         <Switch>
             <Route exact path="/" component={Home}/>
             <Route exact path="/home/:id" component={Home}/>
+            <Route exact path="/orders" component={propsOrders=>{
+              return(
+              <userContext.Consumer>
+                  {(value) =>{
+                       return <Orders {...propsOrders} user={value.user}/>
+                   }}
+              </userContext.Consumer>
+              );
+            
+          }}/>
+            <Route exact path="/orders/:id" component={propsOrders=>{
+              
+                <userContext.Consumer>
+                    {(value) =>{
+                         return <Orders {...propsOrders} user={value.user}/>
+                     }}
+                </userContext.Consumer>
+              
+            }}/>
             <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
             <Route exact path="/author" component={Autor}/>
             <Route exact path="/cart" component={(routerProps) => <Cart {...routerProps} cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart} user={props.user}/>} />

@@ -19,6 +19,10 @@ const getCart = (user, itemsAmount) => {
     return user==="" ? <></> : <li><a href="/cart">Cart ({itemsAmount})</a></li>;
 }
 
+const getOrders = (user) => {
+    return user==="" ? <></> : <li><a href="/orders">Orders</a></li>;
+}
+
 const getLoggedInfo = (user) => {
     return user === "" ? <></> : <li>Logged as: {user} </li>
 }
@@ -41,6 +45,7 @@ const NavBar = (props) => {
                         <li><a href="/">Home</a></li>
                         <li><a href="/author">Autor</a></li>
                         {getCart(props.user, props.cartItems.length)}
+                        {getOrders(props.user)}
                     </ul>
                     <ul class="nav navbar-nav navbar-right"> 
                         {getLoggedInfo(props.user)}
