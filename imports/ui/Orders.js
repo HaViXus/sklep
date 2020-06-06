@@ -61,12 +61,12 @@ const Order = (props) => {
 
         <li>    
             <h3>Order ID: {props.order._id}</h3>       
-            <p>Price: {props.order.totalPrice}</p>
-            <p>Home: {props.order.homeNr}</p>
-            <p>Street: {props.order.street}</p>
-            <p>ZIP Code: {props.order.ZIPCode}</p>
-            <p>Cart: {props.order.cart}</p>
-            <p>Date: {props.order.createdAt.toString()}</p>                     
+            <p><b>Price:</b> <b>{props.order.totalPrice}$</b></p>
+            <p><b>Home:</b> {props.order.homeNr}</p>
+            <p><b>Street:</b> {props.order.street}</p>
+            <p><b>ZIP Code:</b> {props.order.ZIPCode}</p>
+            <p><b>Cart:</b> {props.order.cart}</p>
+            <p><b>Date:</b> {props.order.createdAt.toString()}</p>                     
         </li>
 
     )
