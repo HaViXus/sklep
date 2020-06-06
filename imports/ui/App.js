@@ -13,7 +13,7 @@ import Cart from "./Cart";
 import RegisterPage from './RegisterPage';
 import LoginPage from './LoginPage';
 import NavBar from './Navbar';
-
+import PayInfoPage from './PayInfoPage';
 import {userContext} from './userContext';
 // route components
 
@@ -42,9 +42,10 @@ const  App = (props) => {
             <Route exact path="/home/:id" component={Home}/>
             <Route exact path="/product/:id" component={(componentProps)=> <ProductPage addItem={props.addItemToCart} {...componentProps}/>}/>
             <Route exact path="/author" component={Autor}/>
-            <Route exact path="/cart" component={() => <Cart cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart} user={props.user}/>} />
+            <Route exact path="/cart" component={(routerProps) => <Cart {...routerProps} cartItems={props.cartItems} removeItemFromCart={props.removeItemFromCart} user={props.user}/>} />
             <Route exact path="/register" component={RegisterPage}/>
             <Route exact path="/login" component={LoginPage}/>
+            <Route exact path="/payinfo" component={PayInfoPage}/>
         </Switch>
       </Router>
 
@@ -55,23 +56,6 @@ const  App = (props) => {
 }
 
 const AppManager = () => {
-  const mockedCart = [
-    {
-        id: "d3fS2",
-        productName: "Product1",
-        count: 3
-    },
-    {
-        id: "d45fd",
-        productName: "Product2",
-        count: 1
-    },
-    {
-        id: "dg5jf7d",
-        productName: "Product1",
-        count: 2
-    },
-  ];
 
   const [user, setUser] = useStateWithLocalStorage("user");
   const [cartItems, setCartItems] = useStateWithLocalStorage(`cart:${user}`);

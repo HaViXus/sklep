@@ -64,11 +64,12 @@ const validateTransaction = (cart, res, totalPrice) => {
         else{
           const orderID = Random.id();
           const data = {
+            status: "Success",
             numer: "27 1140 2004 0000 3002 0135 5387",
             name: "Radosław Rybarczyk",
             amount: totalPrice,
             currency: "$",
-            title: `Opłata za zamówienie nr ${orderID}`
+            title: `Opłata za zamówienie o ID: '${orderID}'`
           }
           res.end(JSON.stringify(data));
         }
