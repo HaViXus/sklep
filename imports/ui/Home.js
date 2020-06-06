@@ -5,7 +5,7 @@ import { Products } from '../api/products.js';
  
 import Product from './Product.js';
  
-const maxElements = 2;
+const maxElements = 10;
 
 const PaginationButton = (props) => {
     if(props.selected == true)

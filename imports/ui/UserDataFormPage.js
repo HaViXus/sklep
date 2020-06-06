@@ -2,7 +2,44 @@ import React, {  useState } from 'react';
 import {userContext} from './userContext';
 import axios from 'axios';
 
+const publicIp = require("react-public-ip");
+
+
 const UserDataFormPage = (props) => {
+
+    const getDataPromise = (price) => {
+        console.log(price);
+        const getData = publicIp.v4().then(ip=>{
+            const data = {
+                "order": {
+                    "amount": price.toString(),
+                    "currency": "USD",
+                    "description": "test"
+                },
+                "seller": {
+                    "account_id": "764280", 
+                    "url": "http://localhost:3000/payinfo"   //<------ tutaj url na ktory ma wrocic po dokonaniu platnosci, tez do zmiany
+                },
+                "payer": {
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "email": "johndoemail@example.com"
+                },
+                "payment_method": {
+                    "channel_id": "6"    //<-------------- tutaj są różne kanaly i nizej dam info
+                },
+                "request_context": {
+                        "ip":  "109.173.150.83", //<------- do podania ip
+                        "language": "pl"  //<--- a to chyba opcjonalne, ale w/e
+                }
+            }
+            return data;
+        });
+        return getData;
+    }
+    
+
+    const url = "https://ssl.dotpay.pl/test_payment/payment_api/v1/register_order/"
 
     const state = props.history.location.state;
     console.log(state);
@@ -39,6 +76,7 @@ const UserDataFormPage = (props) => {
         else{
             const cartToSend = JSON.stringify(props.cartItems);
             console.log(cartToSend);
+            
             axios.post(`/api/payinfo`, {
                 user: state.user,
                 cart: state.cart,
@@ -53,14 +91,36 @@ const UserDataFormPage = (props) => {
                 console.log("RES: ", res);
                 console.log("DATA: ", res.data);
                 if(res.data.status==="Success"){
-                    props.history.push("/payinfo",{
-                        numer: res.data.numer,
-                        name: res.data.name,
-                        amount: res.data.amount,
-                        currency: res.data.currency,
-                        title: res.data.title,
-                    });
-                    setCart(JSON.stringify([]));
+                    // props.history.push("/payinfo",{
+                    //     numer: res.data.numer,
+                    //     name: res.data.name,
+                    //     amount: res.data.amount,
+                    //     currency: res.data.currency,
+                    //     title: res.data.title,
+                    // });
+                    getDataPromise(state.totalPrice).then(data=>{
+                        axios({
+                            method: 'POST',
+                            url: url,
+                            headers: {"Accept":"application/json", "Content-Type": "application/json",}, 
+                            data: data,
+                            auth: {
+                                username: "tukedarr@gmail.com",   //<--- do wpisania
+                                password: "Cyclone1"    // <--- do wpisania
+                              }
+                            }).then(response => {
+                                console.log("RES: ", response)
+                                //tutaj otrzymasz link na przekierowanie, tzn. potrzebujesz przejść na link:
+                                response.data.redirect_simplified_url
+                                //ja to zrobiłam poprzez:
+                                window.location.assign(response.data.redirect_simplified_url)
+                                //ale to dlatego że mi router kijowo działa na ten moment :D
+                            }).catch(error => {
+                          });
+                          setCart(JSON.stringify([]));
+                    })
+                    
+                    
                 }
                 else if(res.data.status==="NoItems"){
                     setErrorMessage(`Brak towaru: ${printBadItems(res.data.badItems)}`)

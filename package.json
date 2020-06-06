@@ -14,8 +14,10 @@
     "history": "^4.10.1",
     "jquery": "^3.4.1",
     "meteor-node-stubs": "^1.0.0",
+    "public-ip": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-public-ip": "^1.0.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
   },
