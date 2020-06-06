@@ -53,17 +53,6 @@ const Cart = (props) => {
         return getPrice().then(price=>{console.log(price); return price.toFixed(2)});
     }
 
-    const printBadItems = (badItems) => {
-        let itemsList = "";
-        badItems.map(item=>{
-            console.log("VVV:", item);
-            itemsList = `${itemsList} Produkt: ${item.itemName} Dostępne: ${item.avaliable} W koszyku: ${item.itemsInCart}\n`;
-        });
-
-        return itemsList;
-        
-    }
-
     const onCheckout = (history) => {
         // const cartToSend = JSON.stringify(props.cartItems);
         // console.log(cartToSend);
@@ -96,6 +85,18 @@ const Cart = (props) => {
     }
 
     console.log("COS: ", getTotalPrice());
+
+    const getBuyButton = (props) => {
+        if(props.cartItems.length > 0){
+            return(
+                <button type="button" class="btn btn-success btn-block" onClick={()=>onCheckout(props.history)}>
+                    Zamów
+                </button>
+            );
+        }
+        else return (<></>);
+        
+    }
 
     const getContent = () => {
         if(props.products.length > 0){
@@ -132,9 +133,7 @@ const Cart = (props) => {
                                                 <h4 class="text-right">Total <strong>${totalPrice}</strong></h4>
                                             </div>
                                             <div class="col-xs-3">
-                                                <button type="button" class="btn btn-success btn-block" onClick={()=>onCheckout(props.history)}>
-                                                    Zamów
-                                                </button>
+                                                {getBuyButton(props)}
                                             </div>
                                         </div>
                                     </div>

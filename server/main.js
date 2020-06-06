@@ -6,6 +6,7 @@ import bodyParser from "body-parser"
 import { Users } from '../imports/api/user.js';
 
 import {Products} from '../imports/api/products.js';
+import {Orders} from '../imports/api/orders.js';
 import { Random } from 'meteor/random';
 
 const updateDatabase = (cart, products) => {
@@ -24,7 +25,7 @@ const updateDatabase = (cart, products) => {
     });
   }
 
-  update();
+  return update();
 }
 
 const countItemsInCart = (cart) => {
@@ -65,7 +66,7 @@ const isProperAmount = (cart, products) => {
 
 }
 
-const validateTransaction = (cart, res, totalPrice) => {
+const validateTransaction = (cart, res, totalPrice, req) => {
   const getProducts = async () => {return Products.find({}).fetch() };
 
   getProducts().then(products => {
@@ -91,7 +92,20 @@ const validateTransaction = (cart, res, totalPrice) => {
             title: `Opłata za zamówienie o ID: '${orderID}'`
           }
           res.end(JSON.stringify(data));
-          updateDatabase(cart, products);
+          updateDatabase(cart, products).then(
+            response => {
+              Orders.insert({
+                street: req.body.street,
+                homeNr: req.body.homeNr,
+                ZIPCode: req.body.ZIPCode,
+                city: req.body.city,
+                cart: JSON.stringify(req.body.cart),
+                totalPrice: req.body.totalPrice,
+                user: req.body.user,
+                createdAt: new Date(), // current time
+              });
+              console.log(Orders.find({}).fetch());
+          });
           
 
         }
@@ -124,7 +138,7 @@ Meteor.startup(() => {
       const user = req.body.user;
       const totalPrice = req.body.totalPrice;
 
-      validateTransaction(cart, res, totalPrice);
+      validateTransaction(cart, res, totalPrice, req);
     }
     else {
       next();

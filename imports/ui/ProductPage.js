@@ -31,7 +31,7 @@ ProductPage = (props) => {
         console.log(user)
         if(user != ""){
             return(
-                <button class="btn btn-success" onClick={()=>{props.addItem(Random.id(), product.title, counter)}}>
+                <button class="btn btn-success" onClick={()=>{counter > 0 ? props.addItem(Random.id(), product.title, counter) : ()=>{} }}>
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
                                     Put to Cart
                 </button>

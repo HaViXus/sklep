@@ -9,9 +9,9 @@ const maxElements = 10;
 
 const PaginationButton = (props) => {
     if(props.selected == true)
-        return <li key={props.number.toString()} className="page-item active"><a className="page-link" href={`/home/` + props.number }>{props.number}</a></li>
+        return <li key={props.number.toString()} className="page-item active"><a className="page-link" href={`/home/` + (props.number) }>{props.number}</a></li>
     else
-        return <li key={props.number.toString()} className="page-item"><a className="page-link" href={`/home/` + props.number }>{props.number}</a></li>
+        return <li key={props.number.toString()} className="page-item"><a className="page-link" href={`/home/` + (props.number) }>{props.number}</a></li>
 }
 
 const CreatePagination = (props) => {
@@ -75,9 +75,10 @@ const HomePage = (props) => {
             
             <Pagination products={props.products} selected={props.match.params.id || 1}/>
     
-            <ul>
-            {renderProducts()}
-            </ul>
+                <ul>
+                {renderProducts()}
+                </ul>   
+            <Pagination products={props.products} selected={props.match.params.id || 1}/>
         </div>
     );
   
