@@ -1,9 +1,9 @@
 import React from 'react';
 
-const getLoginPanel = (user, setUser)=>{
+const getLoginPanel = (user, logout)=>{
     
     if(user != ""){
-        return(<li><button className="btn" onClick={()=>{setUser("")}}>logout</button></li>);
+        return(<li><a href="/" className="btn" onClick={logout}>logout</a></li>);
     }
     else{
         return(
@@ -24,7 +24,11 @@ const getLoggedInfo = (user) => {
 }
 
 const NavBar = (props) => {
-    
+
+    const logout = (setUser)=>{
+        props.setUser("");
+    }
+
     console.log(props);
     return(
         <div>
@@ -40,7 +44,7 @@ const NavBar = (props) => {
                     </ul>
                     <ul class="nav navbar-nav navbar-right"> 
                         {getLoggedInfo(props.user)}
-                        {getLoginPanel(props.user, props.setUser)}
+                        {getLoginPanel(props.user, logout)}
                     </ul>
                 </div>
             </nav>  

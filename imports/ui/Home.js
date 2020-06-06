@@ -57,7 +57,6 @@ const Pagination = (props) => {
     );
 }
  
-// App component - represents the whole app
 const HomePage = (props) => {
     const renderProducts = () => {
         const offset = props.match.params.id ? (props.match.params.id - 1 ) * maxElements : 0;
@@ -68,18 +67,18 @@ const HomePage = (props) => {
         ));
     }
  
-    return (
-      <div className="container">
-          
-        <header>
-          <h1>Super przedmioty do kupowania</h1>
-        </header>
-        <Pagination products={props.products} selected={props.match.params.id || 1}/>
- 
-        <ul>
-          {renderProducts()}
-        </ul>
-      </div>
+    return ( 
+        <div className="container">
+            <header >
+            <h1>Super przedmioty do kupowania</h1>
+            </header>
+            
+            <Pagination products={props.products} selected={props.match.params.id || 1}/>
+    
+            <ul>
+            {renderProducts()}
+            </ul>
+        </div>
     );
   
 }
@@ -95,30 +94,30 @@ const HomePage = (props) => {
 
 export default withTracker(() => {
     return {
-        products:[
-            {
-                title: "Product 1",
-                short: "To jest jakis krotki opis he he he",
-                count: 10,
-                imageSrc: "/1.png",
-                price: 5.50
-            },
-            {
-                title: "Product 2",
-                short: "To jest jakis krotki 2 opis he he he",
-                count: 16,
-                imageSrc: "/2.jpg",
-                price: 15.90
-            },
-            {
-                title: "Product 3",
-                short: "To jest jakis krotki 3 opis he he he",
-                count: 654,
-                imageSrc: "/3.jpg",
-                price: 0.35
-            },
-        ]
-      //products: Products.find({}).fetch(),
+        // products:[
+        //     {
+        //         title: "Product 1",
+        //         short: "To jest jakis krotki opis he he he",
+        //         count: 10,
+        //         imageSrc: "/1.png",
+        //         price: 5.50
+        //     },
+        //     {
+        //         title: "Product 2",
+        //         short: "To jest jakis krotki 2 opis he he he",
+        //         count: 16,
+        //         imageSrc: "/2.jpg",
+        //         price: 15.90
+        //     },
+        //     {
+        //         title: "Product 3",
+        //         short: "To jest jakis krotki 3 opis he he he",
+        //         count: 654,
+        //         imageSrc: "/3.jpg",
+        //         price: 0.35
+        //     },
+        // ]
+      products: Products.find({}).fetch(),
     };
 })(HomePage);
 
