@@ -1,4 +1,5 @@
 import React, {  useState } from 'react';
+import {userContext} from './userContext';
 import axios from 'axios';
 
 const UserDataFormPage = (props) => {
@@ -25,7 +26,7 @@ const UserDataFormPage = (props) => {
         setHomeNr(evt.target.value);
     }
 
-    const onSubmit = () => {
+    const onSubmit = (setCart) => {
         let isValid = true;
         if(street.length === 0) isValid = false;
         else if(ZIPCode.length === 0) isValid = false;
@@ -48,6 +49,7 @@ const UserDataFormPage = (props) => {
                 city: city
             })
             .then(res => {  
+
                 console.log("RES: ", res);
                 console.log("DATA: ", res.data);
                 if(res.data.status==="Success"){
@@ -57,7 +59,8 @@ const UserDataFormPage = (props) => {
                         amount: res.data.amount,
                         currency: res.data.currency,
                         title: res.data.title,
-                    })
+                    });
+                    setCart(JSON.stringify([]));
                 }
                 else if(res.data.status==="NoItems"){
                     setErrorMessage(`Brak towaru: ${printBadItems(res.data.badItems)}`)
@@ -99,7 +102,12 @@ const UserDataFormPage = (props) => {
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success" onClick={onSubmit}>Przejdź do płatności</button>
+                    <userContext.Consumer>
+                    {(value) =>{
+                         return <button type="button" class="btn btn-success" onClick={()=>{onSubmit(value.setCart)}}>Przejdź do płatności</button>
+                     }}
+                    </userContext.Consumer>
+                    
                     {isFormValid ? "" : "Error in form!"}
                 </div>
             </div>

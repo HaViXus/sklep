@@ -23,7 +23,7 @@ const browserHistory = createBrowserHistory();
 // App component - represents the whole app
 const  App = (props) => {
 
-  const [cart, setCart] = useStateWithLocalStorage("cart");
+  const [cart, setCart] = useStateWithLocalStorage(`cart:${props.user}`);
 
   const contextValue = {
     user: props.user,
@@ -79,6 +79,10 @@ const AppManager = () => {
 
     setCartItems(JSON.stringify(filteredItems));
   } 
+
+  const clearCart = () => {
+    setCartItems(JSON.stringify([]));
+  }
 
   const props = {
     cartItems: cartItems ? JSON.parse(cartItems) : [],

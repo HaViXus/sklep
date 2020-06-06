@@ -8,6 +8,25 @@ import { Users } from '../imports/api/user.js';
 import {Products} from '../imports/api/products.js';
 import { Random } from 'meteor/random';
 
+const updateDatabase = (cart, products) => {
+  const update= async () => {
+      cart.map(item=>{
+        const product = products.find(element => { return item.name === element.title});
+        
+        if(product){
+          const amount = product.count - item.count;
+          console.log("PROD: ", product._id._str)
+          Products.update(product._id, {
+            $set: { count: amount },
+          });
+          console.log(Products.find({}).fetch());
+        }
+    });
+  }
+
+  update();
+}
+
 const countItemsInCart = (cart) => {
   console.log("CART:", cart)
   let itemsAmount = [];
@@ -72,6 +91,9 @@ const validateTransaction = (cart, res, totalPrice) => {
             title: `Opłata za zamówienie o ID: '${orderID}'`
           }
           res.end(JSON.stringify(data));
+          updateDatabase(cart, products);
+          
+
         }
       });
     })
