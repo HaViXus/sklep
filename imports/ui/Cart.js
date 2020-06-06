@@ -65,27 +65,33 @@ const Cart = (props) => {
     }
 
     const onCheckout = (history) => {
-        const cartToSend = JSON.stringify(props.cartItems);
-        console.log(cartToSend);
-        axios.post(`/api/payinfo`, {user: props.user, cart: props.cartItems, totalPrice: totalPrice})
-        .then(res => {  
-            console.log("RES: ", res);
-            console.log("DATA: ", res.data);
-            if(res.data.status==="Success"){
-                history.push("/payinfo",{
-                    numer: res.data.numer,
-                    name: res.data.name,
-                    amount: res.data.amount,
-                    currency: res.data.currency,
-                    title: res.data.title
-                })
-            }
-            else if(res.data.status==="NoItems"){
-                setErrorMessage(`Brak towaru: ${printBadItems(res.data.badItems)}`)
-            }
-        }).catch(error => {
-            console.log(error);
-        })
+        // const cartToSend = JSON.stringify(props.cartItems);
+        // console.log(cartToSend);
+        // axios.post(`/api/payinfo`, {user: props.user, cart: props.cartItems, totalPrice: totalPrice})
+        // .then(res => {  
+        //     console.log("RES: ", res);
+        //     console.log("DATA: ", res.data);
+        //     if(res.data.status==="Success"){
+        //         history.push("/payinfo",{
+        //             numer: res.data.numer,
+        //             name: res.data.name,
+        //             amount: res.data.amount,
+        //             currency: res.data.currency,
+        //             title: res.data.title
+        //         })
+        //     }
+        //     else if(res.data.status==="NoItems"){
+        //         setErrorMessage(`Brak towaru: ${printBadItems(res.data.badItems)}`)
+        //     }
+        // }).catch(error => {
+        //     console.log(error);
+        // })
+        history.push("/sendData",{
+            user: props.user,
+            cart: props.cartItems,
+            totalPrice: totalPrice
+        });
+        
 
     }
 
@@ -127,7 +133,7 @@ const Cart = (props) => {
                                             </div>
                                             <div class="col-xs-3">
                                                 <button type="button" class="btn btn-success btn-block" onClick={()=>onCheckout(props.history)}>
-                                                    Checkout
+                                                    Zamów
                                                 </button>
                                             </div>
                                         </div>

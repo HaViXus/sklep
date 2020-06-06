@@ -15,6 +15,7 @@ import LoginPage from './LoginPage';
 import NavBar from './Navbar';
 import PayInfoPage from './PayInfoPage';
 import {userContext} from './userContext';
+import UserDataFormPage from './UserDataFormPage';
 // route components
 
 const browserHistory = createBrowserHistory();
@@ -46,6 +47,8 @@ const  App = (props) => {
             <Route exact path="/register" component={RegisterPage}/>
             <Route exact path="/login" component={LoginPage}/>
             <Route exact path="/payinfo" component={PayInfoPage}/>
+            <Route exact path="/sendData" component={UserDataFormPage}/>
+            
         </Switch>
       </Router>
 
